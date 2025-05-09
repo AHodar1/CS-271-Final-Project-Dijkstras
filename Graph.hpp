@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <deque>
+#include <utility>
 
 struct TraversalData {
     bool visited;
@@ -18,6 +19,21 @@ struct TraversalData {
         };
     };
 };
+
+struct DijkstraData
+{
+
+};
+
+struct Vertex
+{
+    // should this be string?
+    long id;
+    // std::make_pair(n, a[1])
+    std::pair<double, double> coords;
+
+};
+
 
 class Graph {
     private:
