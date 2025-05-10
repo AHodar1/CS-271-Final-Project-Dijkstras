@@ -21,7 +21,7 @@ Graph::Graph(int n)
 {
     // assume vertices are 0...n-1;
     // adjList = std::vector<std::vector<Vertex>>(n);
-    adjList = std::vector<std::vector<std::pair<long, double>>>(n);    
+    adjList = std::vector<std::vector<std::tuple<long, double, string>>>(n);    
 
 }
 
@@ -102,29 +102,17 @@ Errors:
     -std::out_of_range, if either inputted vertex does not exist in the graph
     -also will do nothing if there is already an edge where attempting to add a new one
 */
-void Graph::addEdge(long u, long v, double w)
+void Graph::addEdge(long u, long v, double w, string streetName)
 {
     cout << "test addEdge" << endl;
-    // cout << u << endl;
-    // cout << idTracker.count(u) << endl;
-    // for (auto k : idTracker)
-    // {
-    //     cout << "key: " << k.first << endl;
-    //     if (k.first == u)
-    //     {
-    //         cout << "true";
-    //     }
-    // }
-    // if (!(vertexIn(u)) || !(vertexIn(v)))
-    // if ((idTracker.find(u) == idTracker.end()))// || (idTracker.find(v) == idTracker.end()))
     if (idTracker.count(u) == 0)
     {
         throw std::out_of_range("addEdge: vertex/vertices do not exist");
     }
     else
     {
-        std::pair<long, double> VW = std::make_pair(v, w);
-        adjList[keyIndex[u]].push_back(VW);
+        std::tuple<long, double, string> vWname = std::make_tuple(v, w, streetName);
+        adjList[keyIndex[u]].push_back(vWname);
     }
 
     // should maybe add this functionality back in?
@@ -189,8 +177,6 @@ Graph Graph::readFromSTDIN()
     double xCoord, yCoord, weight;
     string streetname;
     std::pair<double, double> coords;
-    // int u;
-    // int v;
 
     for (int i = 0; i < numVerts; i++)
     {
@@ -198,9 +184,8 @@ Graph Graph::readFromSTDIN()
         coords = std::make_pair(xCoord, yCoord);
         g.idTracker.insert({vertID, coords});
         g.keyIndex.insert({vertID, i});
-        // g.addEdge(u, v);
+        g.indexKey.push_back(vertID);
     }
-    g.printVertices();
     for (int i = 0; i < numEdges; i++)
     {
 
@@ -208,9 +193,9 @@ Graph Graph::readFromSTDIN()
         getline(cin, streetname);
         // cout << "edge from vertex: " << u << " to vertex: " << v;
         // cout << " with weight: " << weight << " named: " << streetname << endl;
-        g.addEdge(u, v, weight);
+        g.addEdge(u, v, weight, streetname);
     }
-    cout << idTracker.size() << endl;
+    cout << g.idTracker.size() << endl;
     return g;
 }
 
@@ -227,8 +212,19 @@ void Graph::printVertices()
 
 void Graph::printEdges()
 {
-    for(auto iter : idTracker)
+    long vert;
+    double weight;
+    string streetName;
+    for(int i = 0; i < adjList.size(); i++)
     {
-        cout << "edge: ( )";
+        // auto iter = keyIndex.begin();
+        cout << "edge: " << indexKey[i] << endl;
+        for (int n = 0; n < adjList[i].size(); n++)
+        {
+            tie(vert, weight, streetName) = adjList[i][n];
+            cout << " to: " << vert << " with weight: " << weight;
+            cout << ", (optional) named:" << streetName << endl;
+            // cout << " to: " << adjList[i][n].first << " with weight: " << adjList[i][n].second << endl;
+        } 
     }
 }

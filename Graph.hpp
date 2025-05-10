@@ -41,12 +41,13 @@ struct Vertex
 class Graph {
     private:
     // long = edge and double = weight
-    std::vector<std::vector<std::pair<long, double> > > adjList; // adjacency list
+    std::vector<std::vector<std::tuple<long, double, std::string> > > adjList; // adjacency list
     // std::vector<std::vector<int> > adjList; // adjacency list
     
     // std::unordered_map<long, std::pair<double, double>> idTracker;
     std::map<long, std::pair<double, double>> idTracker;
     std::map<long, int> keyIndex;
+    std::vector<long> indexKey;
     
     
     // std::unordered_map<long, index>
@@ -68,24 +69,13 @@ class Graph {
     // throw an std::out_of_range exception if u or v is not in the graph
     // bool edgeIn(int u, int v);
 
-    void addEdge(long u, long v, double w);
+    void addEdge(long u, long v, double w, std::string name);
 
     // throw an std::out_of_range exception if u or v is not in the graph
     // throw an std::out_of_range exception if (u, v) is not an edge of the graph
     void removeEdge(int u, int v);
 
-    // assume vertices are traversed in numerical order
-    // implement this without use the "colors" approach
-    // throw an std::out_of_range exception if s is not in graph
-    // use -1 as NIL
-    // use INT_MAX as infinity
-    // std::vector<TraversalData> breadthFirstSearch(int s);
-
-    // // assume vertices are traversed in numerical order
-    // // implement this without use the "colors" approach
-    // std::vector<TraversalData> depthFirstSearch(void);
-
-    Graph readFromSTDIN();
+    static Graph readFromSTDIN();
 
     void printVertices();
     

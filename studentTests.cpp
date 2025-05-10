@@ -11,9 +11,14 @@ int main()
     cout << "construct gFile = readFromSTDIN();" << endl;
     // Graph gFile = Graph::readFromSTDIN();
 
-    Graph gFile(0);
-    gFile = gFile.readFromSTDIN();
+    // Graph gFile(0);
+    // gFile = gFile.readFromSTDIN();
+
+    Graph gFile = Graph::readFromSTDIN();
+
+
     gFile.printVertices();
+    gFile.printEdges();
     // long u = 1211111111;
     // long v = 2222222222;
     // gFile.addEdge(u, v);
