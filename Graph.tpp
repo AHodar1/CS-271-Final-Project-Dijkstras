@@ -102,17 +102,20 @@ Errors:
     -std::out_of_range, if either inputted vertex does not exist in the graph
     -also will do nothing if there is already an edge where attempting to add a new one
 */
-void Graph::addEdge(long u, long v)
+void Graph::addEdge(long u, long v, double w)
 {
     // if (!(vertexIn(u)) || !(vertexIn(v)))
     if ((idTracker.find(u) == idTracker.end()) || (idTracker.find(v) == idTracker.end()))
     {
         throw std::out_of_range("addEdge: vertex/vertices do not exist");
     }
-    
-    // adjList[u]
-    
-    
+    else
+    {
+        std::pair<long, double> VW = std::make_pair(v, w);
+        adjList[keyIndex[u]].push_back(VW);
+    }
+
+    // should maybe add this functionality back in?
     // if (!(edgeIn(u, v)))
     // {
     //     adjList[u].push_back(v);
@@ -184,6 +187,10 @@ Graph Graph::readFromSTDIN()
         idTracker.insert({vertID, coords});
         keyIndex.insert({vertID, i});
         // g.addEdge(u, v);
+    }
+    for (int i = 0; i < numEdges; i++)
+    {
+        
     }
     cout << idTracker.size() << endl;
     return g;

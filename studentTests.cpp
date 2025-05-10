@@ -14,9 +14,9 @@ int main()
     Graph gFile(0);
     gFile = gFile.readFromSTDIN();
     gFile.printVertices();
-    long u = 1211111111;
-    long v = 2222222222;
-    gFile.addEdge(u, v);
+    // long u = 1211111111;
+    // long v = 2222222222;
+    // gFile.addEdge(u, v);
     // cout << "gFile.edgeIn for all possible edges: ";
     // for (int i = 0; i < 6; i++)
     // {

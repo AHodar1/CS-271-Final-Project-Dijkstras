@@ -39,7 +39,7 @@ struct Vertex
 
 class Graph {
     private:
-    // assume vertices are 0...n-1;
+    // long = edge and double = weight
     std::vector<std::vector<std::pair<long, double> > > adjList; // adjacency list
     // std::vector<std::vector<int> > adjList; // adjacency list
     
@@ -67,8 +67,7 @@ class Graph {
     // throw an std::out_of_range exception if u or v is not in the graph
     // bool edgeIn(int u, int v);
 
-    // throw an std::out_of_range exception if u or v is not in the graph
-    void addEdge(long u, long v);
+    void addEdge(long u, long v, double w);
 
     // throw an std::out_of_range exception if u or v is not in the graph
     // throw an std::out_of_range exception if (u, v) is not an edge of the graph
