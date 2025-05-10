@@ -104,8 +104,20 @@ Errors:
 */
 void Graph::addEdge(long u, long v, double w)
 {
+    cout << "test addEdge" << endl;
+    // cout << u << endl;
+    // cout << idTracker.count(u) << endl;
+    // for (auto k : idTracker)
+    // {
+    //     cout << "key: " << k.first << endl;
+    //     if (k.first == u)
+    //     {
+    //         cout << "true";
+    //     }
+    // }
     // if (!(vertexIn(u)) || !(vertexIn(v)))
-    if ((idTracker.find(u) == idTracker.end()) || (idTracker.find(v) == idTracker.end()))
+    // if ((idTracker.find(u) == idTracker.end()))// || (idTracker.find(v) == idTracker.end()))
+    if (idTracker.count(u) == 0)
     {
         throw std::out_of_range("addEdge: vertex/vertices do not exist");
     }
@@ -173,9 +185,9 @@ Graph Graph::readFromSTDIN()
     cin >> numVerts >> numEdges;
     Graph g(numVerts);
 
-    long vertID;
-    double xCoord;
-    double yCoord;
+    long vertID, u, v;
+    double xCoord, yCoord, weight;
+    string streetname;
     std::pair<double, double> coords;
     // int u;
     // int v;
@@ -184,13 +196,19 @@ Graph Graph::readFromSTDIN()
     {
         cin >> vertID >> xCoord >> yCoord;
         coords = std::make_pair(xCoord, yCoord);
-        idTracker.insert({vertID, coords});
-        keyIndex.insert({vertID, i});
+        g.idTracker.insert({vertID, coords});
+        g.keyIndex.insert({vertID, i});
         // g.addEdge(u, v);
     }
+    g.printVertices();
     for (int i = 0; i < numEdges; i++)
     {
-        
+
+        cin >> u >> v >> weight;
+        getline(cin, streetname);
+        // cout << "edge from vertex: " << u << " to vertex: " << v;
+        // cout << " with weight: " << weight << " named: " << streetname << endl;
+        g.addEdge(u, v, weight);
     }
     cout << idTracker.size() << endl;
     return g;

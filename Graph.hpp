@@ -6,6 +6,7 @@
 #include <utility>
 #include <unordered_map>
 #include <map>
+#include <string>
 
 struct TraversalData {
     bool visited;
