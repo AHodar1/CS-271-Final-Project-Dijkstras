@@ -20,7 +20,9 @@ Errors:
 Graph::Graph(int n)
 {
     // assume vertices are 0...n-1;
-    adjList = std::vector<std::vector<Vertex>>(n);    
+    // adjList = std::vector<std::vector<Vertex>>(n);
+    adjList = std::vector<std::vector<std::pair<long, double>>>(n);    
+
 }
 
 /*
@@ -89,39 +91,6 @@ Graph &Graph::operator=(const Graph &g)
 }
 
 /*
-dfsVisit
-Purpose: Helper function for depthFirstSearch
-    Assigns attributes to each member of data and recursively find neighbors of the current vertex
-Parameters:
-    -data, a reference to the vector of TraversalData created in depthFirstSearch
-    -time, a references to the variable tracking time of discovery and finish times of each vertex
-    -u, the current vertex being discovered and altered
-    -order, a reference to the variable tracking topological ordering of each vertex as they finish
-Return Value:
-    -void, but alters and assigns attributes for connected vertices of the graph in data
-Errors:
-    -N/A
-*/
-// void Graph::dfsVisit(std::vector<TraversalData> &data, int &time, int u, int &order)
-// {
-//     time++;
-//     data[u].visited = true;
-//     data[u].discovery = time;
-//     for (int v = 0; v < adjList[u].size(); v++)
-//     {
-//         if (data[adjList[u][v]].visited == false)
-//         {
-//             data[adjList[u][v]].parent = u;
-//             dfsVisit(data, time, adjList[u][v], order);
-//         }
-//     }
-//     time++;
-//     data[u].finish = time;
-//     data[u].order = order;
-//     order--;
-// }
-
-/*
 addEdge
 Purpose: Add an edge between the two inputted vertices
 Parameters:
@@ -133,17 +102,18 @@ Errors:
     -std::out_of_range, if either inputted vertex does not exist in the graph
     -also will do nothing if there is already an edge where attempting to add a new one
 */
-void Graph::addEdge(int u, int v)
+void Graph::addEdge(long u, long v)
 {
     // if (!(vertexIn(u)) || !(vertexIn(v)))
-    // {
-    //     throw std::out_of_range("addEdge: vertex/vertices do not exist");
-    // }
+    if (!(idTracker.contains(u)) || !(idTracker.contains(v)))
+    {
+        throw std::out_of_range("addEdge: vertex/vertices do not exist");
+    }
     
-    // if (!(edgeIn(u, v)))
-    // {
-    //     adjList[u].push_back(v);
-    // }
+    if (!(edgeIn(u, v)))
+    {
+        adjList[u].push_back(v);
+    }
 
 }
 
@@ -179,89 +149,6 @@ void Graph::removeEdge(int u, int v)
     // }
 }
 
-/*
-breadthFirstSearch
-Purpose: Make a vector of attributes for each vertex in the graph representing the results of a breadth-first-search
-Parameters:
-    -s, the source vertex to start a breadth first search from
-Return Value:
-    -bfs, a vector of TraversalData representing bfs attributes for each vertex of the graph
-Errors:
-    -std::out_of_range, if the inputted vertex does not exist in the graph
-*/
-// std::vector<TraversalData> Graph::breadthFirstSearch(int s)
-// {
-//     std::vector<TraversalData> bfs(adjList.size());
-//     if (!(vertexIn(s)))
-//     {
-//         throw std::out_of_range("breadthFirstSearch: vertex not in graph");
-//     }
-//     else
-//     {
-//         for (int i = 0; i < adjList.size(); i++)
-//         {
-//             bfs[i].visited = false;
-//             // -1 = NIL
-//             bfs[i].parent = -1;
-//             // INT_MAX = infinity
-//             bfs[i].distance = __INT_MAX__;
-//         }
-//         bfs[s].visited = true;
-//         bfs[s].distance = 0;
-//         std::deque<int> toVisit;
-//         toVisit.push_back(s);
-//         while (!(toVisit.empty()))
-//         {
-//             int u = toVisit.front();
-//             toVisit.pop_front();
-//             for (int v = 0; v < adjList[u].size(); v++)
-//             {
-//                 if (bfs[adjList[u][v]].visited == false)
-//                 {
-//                     bfs[adjList[u][v]].visited = true;
-//                     bfs[adjList[u][v]].distance = bfs[u].distance + 1;
-//                     bfs[adjList[u][v]].parent = u;
-//                     toVisit.push_back(v);
-//                 }
-//             }
-//         }
-//     }
-//     return bfs;
-// }
-
-/*
-depthFirstSearch
-Purpose: 
-Parameters:
-    -N/A
-Return Value:
-    -dfs, a vector of TraversalData representing dfs attributes for each vertex of the graph
-Errors:
-    -N/A
-// */
-// std::vector<TraversalData> Graph::depthFirstSearch(void)
-// {
-//     std::vector<TraversalData> dfs(adjList.size());
-//     int time = 0;
-//     int order = dfs.size();
-//     for (int i = 0; i < adjList.size(); i++)
-//     {
-//         dfs[i].visited = false;
-//         // -1 = NIL
-//         dfs[i].parent = -1;
-//         // dfs[i].order = 0;
-//     }
-//     for (int i = 0; i < adjList.size(); i++)
-//     {
-//         if (dfs[i].visited == false)
-//         {
-//             dfsVisit(dfs, time, i, order);
-
-//         }
-//     }
-
-//     return dfs;
-// }
 
 /*
 readFromSTDIN
@@ -306,5 +193,13 @@ void Graph::printVertices()
         // cout << kv.first;
         cout << "id: " << kv.first << " xCoord = " << kv.second.first << " yCoord = " << kv.second.second << endl;
         
+    }
+}
+
+void Graph::printEdges()
+{
+    for(auto iter : idTracker)
+    {
+        cout << "edge: ( )";
     }
 }

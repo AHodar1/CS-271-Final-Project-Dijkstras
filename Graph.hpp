@@ -5,6 +5,7 @@
 #include <deque>
 #include <utility>
 #include <unordered_map>
+#include <map>
 
 struct TraversalData {
     bool visited;
@@ -39,9 +40,14 @@ struct Vertex
 class Graph {
     private:
     // assume vertices are 0...n-1;
-    std::vector<std::vector<Vertex> > adjList; // adjacency list
+    std::vector<std::vector<std::pair<long, double> > > adjList; // adjacency list
     // std::vector<std::vector<int> > adjList; // adjacency list
-    std::unordered_map<long, std::pair<double, double>> idTracker;
+    
+    // std::unordered_map<long, std::pair<double, double>> idTracker;
+    std::map<long, std::pair<double, double>> idTracker;
+    
+    
+    // std::unordered_map<long, index>
     // order is a variable used to keep track of the position of the last element placed in the topological ordering
     void dfsVisit(std::vector<TraversalData> &data, int &time, int u, int &order);
 
@@ -61,7 +67,7 @@ class Graph {
     // bool edgeIn(int u, int v);
 
     // throw an std::out_of_range exception if u or v is not in the graph
-    void addEdge(int u, int v);
+    void addEdge(long u, long v);
 
     // throw an std::out_of_range exception if u or v is not in the graph
     // throw an std::out_of_range exception if (u, v) is not an edge of the graph
@@ -81,6 +87,8 @@ class Graph {
     Graph readFromSTDIN();
 
     void printVertices();
+    
+    void printEdges();
 };
 
 #include "Graph.tpp"
