@@ -45,6 +45,7 @@ class Graph {
     
     // std::unordered_map<long, std::pair<double, double>> idTracker;
     std::map<long, std::pair<double, double>> idTracker;
+    std::map<long, int> keyIndex;
     
     
     // std::unordered_map<long, index>

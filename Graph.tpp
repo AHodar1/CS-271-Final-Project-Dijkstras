@@ -105,15 +105,18 @@ Errors:
 void Graph::addEdge(long u, long v)
 {
     // if (!(vertexIn(u)) || !(vertexIn(v)))
-    if (!(idTracker.contains(u)) || !(idTracker.contains(v)))
+    if ((idTracker.find(u) == idTracker.end()) || (idTracker.find(v) == idTracker.end()))
     {
         throw std::out_of_range("addEdge: vertex/vertices do not exist");
     }
     
-    if (!(edgeIn(u, v)))
-    {
-        adjList[u].push_back(v);
-    }
+    // adjList[u]
+    
+    
+    // if (!(edgeIn(u, v)))
+    // {
+    //     adjList[u].push_back(v);
+    // }
 
 }
 
@@ -179,6 +182,7 @@ Graph Graph::readFromSTDIN()
         cin >> vertID >> xCoord >> yCoord;
         coords = std::make_pair(xCoord, yCoord);
         idTracker.insert({vertID, coords});
+        keyIndex.insert({vertID, i});
         // g.addEdge(u, v);
     }
     cout << idTracker.size() << endl;
