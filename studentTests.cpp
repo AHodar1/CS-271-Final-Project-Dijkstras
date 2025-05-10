@@ -111,53 +111,27 @@ int main()
     //     }
     // }
     // cout << endl;
-    
-    // // test depthFirstSearch (automatically tests dfsVisit)
-    // cout << "Create txtbookG_dfs;" << endl;
-    // std::vector<TraversalData> txtbookG_dfs = txtbookG.depthFirstSearch();
-    // for (int i = 0; i < txtbookG_dfs.size(); i++)
-    // {
-    //     cout << "dfs(" << i << "): discovery = " << txtbookG_dfs[i].discovery << ", finish = " << txtbookG_dfs[i].finish << ", parent = " << txtbookG_dfs[i].parent << ", topological ordering = " << txtbookG_dfs[i].order << endl;
-    // }
-
 
     // // test readFromSTDIN
     // // commented out for sake of the autograder
-    // // cout << "construct gFile = readFromSTDIN();" << endl;
-    // // Graph gFile = Graph::readFromSTDIN();
-    // // cout << "gFile.edgeIn for all possible edges: ";
-    // // for (int i = 0; i < 6; i++)
-    // // {
-    // //     cout << endl;
-    // //     for (int n = 0; n < 6; n++)
-    // //     {
-    // //         // cout << "gFile.edgeIn(" << i << ", " << n << ") = " << g1.edgeIn(i, n) << endl;
-    // //         cout << "(" << i << ", " << n << ") = " << gFile.edgeIn(i, n) << ", ";
-    // //     }
-    // // }
-    // // cout << endl;
+    cout << "construct gFile = readFromSTDIN();" << endl;
+    // Graph gFile = Graph::readFromSTDIN();
 
-    // // test breadthFirstSearch from several sources
-    // cout << "Create txtbookG_bfs(0);" << endl;
-    // std::vector<TraversalData> txtbookG_bfs = txtbookG.breadthFirstSearch(0);
-    // for (int i = 0; i < txtbookG_bfs.size(); i++)
+    Graph gFile(0);
+    gFile = gFile.readFromSTDIN();
+    gFile.printVertices();
+    // cout << "gFile.edgeIn for all possible edges: ";
+    // for (int i = 0; i < 6; i++)
     // {
-    //     cout << "bfs(" << i << "): visited = " << txtbookG_bfs[i].visited << ", parent = " << txtbookG_bfs[i].parent << ", distance (from source) = " << txtbookG_bfs[i].distance << endl;
+    //     cout << endl;
+    //     for (int n = 0; n < 6; n++)
+    //     {
+    //         // cout << "gFile.edgeIn(" << i << ", " << n << ") = " << g1.edgeIn(i, n) << endl;
+    //         cout << "(" << i << ", " << n << ") = " << gFile.edgeIn(i, n) << ", ";
+    //     }
     // }
+    // cout << endl;
 
-    // cout << "Create txtbookG_bfs(2);" << endl;
-    // std::vector<TraversalData> txtbookG_bfs2 = txtbookG.breadthFirstSearch(2);
-    // for (int i = 0; i < txtbookG_bfs2.size(); i++)
-    // {
-    //     cout << "bfs(" << i << "): visited = " << txtbookG_bfs2[i].visited << ", parent = " << txtbookG_bfs2[i].parent << ", distance (from source) = " << txtbookG_bfs2[i].distance << endl;
-    // }
-
-    // cout << "Create txtbookG_bfs(5);" << endl;
-    // std::vector<TraversalData> txtbookG_bfs5 = txtbookG.breadthFirstSearch(5);
-    // for (int i = 0; i < txtbookG_bfs5.size(); i++)
-    // {
-    //     cout << "bfs(" << i << "): visited = " << txtbookG_bfs5[i].visited << ", parent = " << txtbookG_bfs5[i].parent << ", distance (from source) = " << txtbookG_bfs5[i].distance << endl;
-    // }
     return 0;
 
 }

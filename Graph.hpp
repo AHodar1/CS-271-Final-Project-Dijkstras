@@ -41,7 +41,7 @@ class Graph {
     // assume vertices are 0...n-1;
     std::vector<std::vector<Vertex> > adjList; // adjacency list
     // std::vector<std::vector<int> > adjList; // adjacency list
-    std::unordered_map<long, int> idTracker;
+    std::unordered_map<long, std::pair<double, double>> idTracker;
     // order is a variable used to keep track of the position of the last element placed in the topological ordering
     void dfsVisit(std::vector<TraversalData> &data, int &time, int u, int &order);
 
@@ -78,7 +78,9 @@ class Graph {
     // // implement this without use the "colors" approach
     // std::vector<TraversalData> depthFirstSearch(void);
 
-    static Graph readFromSTDIN();
+    Graph readFromSTDIN();
+
+    void printVertices();
 };
 
 #include "Graph.tpp"

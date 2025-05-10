@@ -283,14 +283,28 @@ Graph Graph::readFromSTDIN()
     long vertID;
     double xCoord;
     double yCoord;
+    std::pair<double, double> coords;
     // int u;
     // int v;
 
     for (int i = 0; i < numVerts; i++)
     {
         cin >> vertID >> xCoord >> yCoord;
-        idTracker.insert({vertID, idTracker.size()});
+        coords = std::make_pair(xCoord, yCoord);
+        idTracker.insert({vertID, coords});
         // g.addEdge(u, v);
     }
+    cout << idTracker.size() << endl;
     return g;
+}
+
+void Graph::printVertices()
+{
+    // for (auto iter = idTracker.begin(); iter != idTracker.end(); ++iter)
+    for(auto kv : idTracker)
+    {
+        // cout << kv.first;
+        cout << "id: " << kv.first << " xCoord = " << kv.second.first << " yCoord = " << kv.second.second << endl;
+        
+    }
 }
