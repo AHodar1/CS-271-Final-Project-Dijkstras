@@ -35,9 +35,7 @@ struct VertexData
 {
     // should this be string?
     long id;
-    // std::make_pair(n, a[1])
     std::pair<double, double> coords;
-    // Dijkstra's values
     int dist;
     long parent;
 };
@@ -47,7 +45,6 @@ struct EdgeData
     long u, v;
     double weight;
     std::string streetName;
-
 };
 
 class Compare 

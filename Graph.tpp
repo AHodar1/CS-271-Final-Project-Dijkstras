@@ -179,13 +179,13 @@ void Graph::dijkstras(long s)
     string streetName;
     std::vector<EdgeData> edges(numEdges());
     int count = 0;
-    cout << "2test dijkstra's" << endl;
+    // cout << "2test dijkstra's" << endl;
 
     for (int i = 0; i < adjList.size(); i++)
     {
         for (int n = 0; n < adjList[i].size(); n++)
         {    
-            cout << "3test dijkstra's" << endl;
+            // cout << "3test dijkstra's" << endl;
 
             tie(IDv, weight, streetName) = adjList[i][n];
             edges[count].u = indexKey[i];
@@ -201,8 +201,12 @@ void Graph::dijkstras(long s)
     }
     // 2: CreateminpriorityqueueQ
     std::priority_queue <VertexData, std::vector<VertexData>, Compare> Q;
+    
+    
     // create empty set S
     std::vector<VertexData> S(idTracker.size());
+
+    
     for (auto iter : idTracker)
     {
         VertexData vert;
@@ -228,12 +232,44 @@ void Graph::dijkstras(long s)
         // 13: u=Q.pop()
         VertexData u = Q.top();
         Q.pop();
-        S.insert(u)
-
-        for (int i = 0; i < adjList[indexKey[u.id]].size(); i++)
+        bool visited = false;
+        for (int i = 0; i < S.size(); i++)
         {
-            
+            if (S[i].id == u.id)
+            {
+                visited = true;
+            }
         }
+        long IDv;
+        if (!(visited))
+        {
+            S.push_back(u);
+            for (int i = 0; i < adjList[keyIndex[u.id]].size(); i++)
+            {
+                cout << "5test dijkstra's" << endl;
+    
+                // 16: if u.d+w(u,v)<v.dthen
+                // 17: v.d=u.d+w(u,v)
+                // 18: v.p=u
+                tie(IDv, weight, streetName) = adjList[keyIndex[u.id]][i];
+                cout << "weight: " << weight << endl;
+                // if (u.dist + weight < )
+                VertexData v;
+                v.id = IDv;
+                v.coords = idTracker[IDv];
+                v.dist = u.dist + weight;
+                v.parent = u.id;
+                Q.push(v);
+                
+            }
+        }
+        // double weight;
+        // string streetName;
+        // cout << "4test dijkstra's" << adjList[indexKey[u.id]].size() << endl;
+        // cout << "4test dijkstra's" << u.id << endl;
+
+        // for each outneighbor of u
+
 
     }
 
