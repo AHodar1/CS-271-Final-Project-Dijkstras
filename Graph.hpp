@@ -32,25 +32,15 @@ class Compare
 {
     public:
         bool operator()(VertexData a, VertexData b) const
-       {
-            // long a_IDv, b_IDv;
-            // double a_weight, b_weight;
-            // std::string a_streetName, b_streetName;
-            // tie(a_IDv, a_weight, a_streetName) = a;
-            // tie(b_IDv, b_weight, b_streetName) = b;
-
+        {
             return a.dist > b.dist;
-            //    if(a->getFreq() > b->getFreq())
-            //    {
-            //        return true;
-            //    }
-            // return false;
         }
 };
 
 
 
-class Graph {
+class Graph 
+{
     private:
     // long = edge and double = weight
     std::vector<std::vector<std::tuple<long, double, std::string> > > adjList;

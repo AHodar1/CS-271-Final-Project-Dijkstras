@@ -27,15 +27,13 @@ Errors:
 */
 Graph::Graph(int n)
 {
-    // assume vertices are 0...n-1;
-    // adjList = std::vector<std::vector<Edge>>(n);    
     adjList = std::vector<std::vector<std::tuple<long, double, string>>>(n);    
 
 }
 
 /*
 copy constructor
-Purpose: Create an adjacency list with a size equal to g's adjacency list and fill out the adjacency list with each edge of g
+Purpose: Create an adjacency list and other trackers deep copied from g
 Parameters:
     -g, the inputted graph to deep copy
 Return Value:
@@ -45,29 +43,49 @@ Errors:
 */
 Graph::Graph(const Graph &g)
 {
-    // adjList = std::vector<std::vector<int>>(g.adjList.size());
-    // for (int i = 0; i < g.adjList.size(); i++)
-    // {
-    //     for (int n = 0; n < g.adjList[i].size(); n++)
-    //     {
-    //         addEdge(i, g.adjList[i][n]);
-    //     }
-    // }
+    adjList = std::vector<std::vector<std::tuple<long, double, string>>>(g.adjList.size());
+    long IDv;
+    double weight;
+    string streetName;
+    for (int i = 0; i < g.adjList.size(); i++)
+    {
+        for (int n = 0; n < g.adjList[i].size(); n++)
+        {
+
+            tie(IDv, weight, streetName) = g.adjList[i][n];
+            addEdge(indexKey[i], IDv, weight, streetName);
+        }
+    }
+    for (auto kv : g.idTracker)
+    {
+        idTracker.insert({kv.first, kv.second});
+    }
+    for (auto kv : g.keyIndex)
+    {
+        keyIndex.insert({kv.first, kv.second});
+    }
+    for (int i = 0; i < g.indexKey.size(); i++)
+    {
+        indexKey[i] = g.indexKey[i];
+    }
 }
 
 /*
 destructor (~Graph())
-Purpose: cleans up any dynamic data and resets adjList
+Purpose: cleans up any dynamic data and resets adjList, idTracker, keyIndex, and indexKey
 Parameters:
     -N/A
 Return Value:
-    -N/A, but clears adjList
+    -N/A, but clears adjList, idTracker, keyIndex, and indexKey
 Errors:
     -N/A
 */
 Graph::~Graph(void)
 {
     adjList.clear();
+    idTracker.clear();
+    keyIndex.clear();
+    indexKey.clear();
 }
 
 /*
@@ -82,18 +100,35 @@ Errors:
 */
 Graph &Graph::operator=(const Graph &g)
 {
-    // TODO: insert return statement here
-    // adjList.clear();
-    // adjList = std::vector<std::vector<int>>(g.adjList.size());
-    // for (int i = 0; i < g.adjList.size(); i++)
-    // {
-    //     for (int n = 0; n < g.adjList[i].size(); n++)
-    //     {
-    //         // cout << "g1.edgeIn(" << i << ", " << n << ") = " << g1.edgeIn(i, n) << endl;
-    //         // cout << "(" << i << ", " << n << ") = " << g1.edgeIn(i, n) << ", ";
-    //         addEdge(i, g.adjList[i][n]);
-    //     }
-    // }
+    adjList.clear();
+    idTracker.clear();
+    keyIndex.clear();
+    indexKey.clear();
+    adjList = std::vector<std::vector<std::tuple<long, double, string>>>(g.adjList.size());
+    long IDv;
+    double weight;
+    string streetName;
+    for (int i = 0; i < g.adjList.size(); i++)
+    {
+        for (int n = 0; n < g.adjList[i].size(); n++)
+        {
+
+            tie(IDv, weight, streetName) = g.adjList[i][n];
+            addEdge(indexKey[i], IDv, weight, streetName);
+        }
+    }
+    for (auto kv : g.idTracker)
+    {
+        idTracker.insert({kv.first, kv.second});
+    }
+    for (auto kv : g.keyIndex)
+    {
+        keyIndex.insert({kv.first, kv.second});
+    }
+    for (int i = 0; i < g.indexKey.size(); i++)
+    {
+        indexKey[i] = g.indexKey[i];
+    }
     return *this;
 
 }
