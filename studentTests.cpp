@@ -17,8 +17,9 @@ int main()
     Graph gFile = Graph::readFromSTDIN();
 
 
-    gFile.printVertices();
+    gFile.printVertices(); 
     gFile.printEdges();
+    gFile.dijkstras(1111111111);
     // long u = 1211111111;
     // long v = 2222222222;
     // gFile.addEdge(u, v);

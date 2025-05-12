@@ -20,7 +20,7 @@ Errors:
 Graph::Graph(int n)
 {
     // assume vertices are 0...n-1;
-    // adjList = std::vector<std::vector<Vertex>>(n);
+    // adjList = std::vector<std::vector<Edge>>(n);    
     adjList = std::vector<std::vector<std::tuple<long, double, string>>>(n);    
 
 }
@@ -90,6 +90,21 @@ Graph &Graph::operator=(const Graph &g)
 
 }
 
+
+int Graph::numEdges()
+{
+    int count = 0;
+    for (int i = 0; i < adjList.size(); i++)
+    {
+        for (int n = 0; n < adjList[i].size(); n++)
+        {
+            count++;
+        }
+    }
+    cout << count << endl;
+    return count;
+}
+
 /*
 addEdge
 Purpose: Add an edge between the two inputted vertices
@@ -112,6 +127,7 @@ void Graph::addEdge(long u, long v, double w, string streetName)
     else
     {
         std::tuple<long, double, string> vWname = std::make_tuple(v, w, streetName);
+        // Edge* e = new Edge
         adjList[keyIndex[u]].push_back(vWname);
     }
 
@@ -155,7 +171,97 @@ void Graph::removeEdge(int u, int v)
     // }
 }
 
+void Graph::dijkstras(long s)
+{
+    cout << "test dijkstra's" << endl;
+    long IDv;
+    double weight;
+    string streetName;
+    std::vector<EdgeData> edges(numEdges());
+    int count = 0;
+    cout << "2test dijkstra's" << endl;
 
+    for (int i = 0; i < adjList.size(); i++)
+    {
+        for (int n = 0; n < adjList[i].size(); n++)
+        {    
+            cout << "3test dijkstra's" << endl;
+
+            tie(IDv, weight, streetName) = adjList[i][n];
+            edges[count].u = indexKey[i];
+            edges[count].v = IDv;
+            // if (IDv == s)
+            // {
+            //     edges[count].dist = 0;
+            // }
+            edges[count].weight = weight;
+            edges[count].streetName = streetName;
+            count++;
+        }
+    }
+    // 2: CreateminpriorityqueueQ
+    std::priority_queue <VertexData, std::vector<VertexData>, Compare> Q;
+    // create empty set S
+    std::vector<VertexData> S(idTracker.size());
+    for (auto iter : idTracker)
+    {
+        VertexData vert;
+        vert.id = iter.first;
+        vert.coords = iter.second;
+        if (vert.id == s)
+        {
+            vert.dist = 0;
+        }
+        else
+        {
+            vert.dist = INT_MAX;
+        }
+        vert.parent = -1;
+        Q.push(vert);
+    }
+    
+    while (!(Q.empty()))
+    {
+        // cout << "vertex id: " << Q.top().id << " dist: " << Q.top().dist << endl;
+        // Q.pop();
+        
+        // 13: u=Q.pop()
+        VertexData u = Q.top();
+        Q.pop();
+        S.insert(u)
+
+        for (int i = 0; i < adjList[indexKey[u.id]].size(); i++)
+        {
+            
+        }
+
+    }
+
+
+}
+/*
+ functionmodifiedDijkstra’s(G=(V,E),w,s)
+ 2: CreateminpriorityqueueQ
+ 3: CreateemptysetS
+ 4: s.d=0
+ 5: s.p=NIL
+ 6: Q.push(s)
+ 7: foreachvertexv∈V−{s}do
+ 8: v.d=∞
+ 9: v.p=NIL
+ 10: Q.push(v)
+ 11: endfor
+ 12: whileQ=∅andQ.top().d=∞do
+ 13: u=Q.pop()
+ 14: S=S∪{u}
+ 15: foreachoutneighborvofudo
+ 16: ifu.d+w(u,v)<v.dthen
+ 17: v.d=u.d+w(u,v)
+ 18: v.p=u
+ 19: endif
+ 20: endfor
+ 21: endwhile
+ 22: endfunction*/
 /*
 readFromSTDIN
 Purpose: Read an inputted file of graph data and construct that graph
