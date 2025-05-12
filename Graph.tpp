@@ -127,7 +127,6 @@ void Graph::addEdge(long u, long v, double w, string streetName)
     else
     {
         std::tuple<long, double, string> vWname = std::make_tuple(v, w, streetName);
-        // Edge* e = new Edge
         adjList[keyIndex[u]].push_back(vWname);
     }
 
@@ -139,38 +138,6 @@ void Graph::addEdge(long u, long v, double w, string streetName)
 
 }
 
-/*
-removeEdge
-Purpose: Remove an edge between the two inputted vertices
-Parameters:
-    -u, the first vertex the edge to delete leads from
-    -v, the second vertex, which the edge to delete goes to
-Return Value:
-    -void, but the adjacency list will have erased a value representing a former edge
-Errors:
-    -std::out_of_range, if either inputted vertex does not exist in the graph
-    -std::out_of_range, if there is no edge between the two inputted vertices
-*/
-void Graph::removeEdge(int u, int v)
-{
-    // if (!(vertexIn(u)) || !(vertexIn(v)))
-    // {
-    //     throw std::out_of_range("removeEdge: vertex/vertices do not exist");
-    // }
-    // if (!(edgeIn(u, v)))
-    // {
-    //     throw std::out_of_range("removeEdge: inputted edge does not exist");
-    // }
-    
-    // for (int i = 0; i < adjList[u].size(); i++)
-    // {
-    //     if (adjList[u][i] == v)
-    //     {
-    //         adjList[u].erase(adjList[u].begin() + i);
-    //     }
-    // }
-}
-
 void Graph::dijkstras(long s, long t)
 {
     // cout << "test dijkstra's" << endl;
@@ -179,33 +146,20 @@ void Graph::dijkstras(long s, long t)
     string streetName;
     std::vector<EdgeData> edges(numEdges());
     int count = 0;
-    // cout << "2test dijkstra's" << endl;
-
     for (int i = 0; i < adjList.size(); i++)
     {
         for (int n = 0; n < adjList[i].size(); n++)
         {    
-            // cout << "3test dijkstra's" << endl;
-
             tie(IDv, weight, streetName) = adjList[i][n];
             edges[count].u = indexKey[i];
             edges[count].v = IDv;
-            // if (IDv == s)
-            // {
-            //     edges[count].dist = 0;
-            // }
             edges[count].weight = weight;
             edges[count].streetName = streetName;
             count++;
         }
     }
-    // 2: CreateminpriorityqueueQ
     std::priority_queue <VertexData, std::vector<VertexData>, Compare> Q;
-    
-    
-    // create empty set S
     std::vector<VertexData> S;
-
     
     for (auto iter : idTracker)
     {
@@ -221,7 +175,6 @@ void Graph::dijkstras(long s, long t)
             vert.dist = INT_MAX;
         }
         vert.parent = -1;
-        // cout << "vert.dist: " << vert.dist << endl;
         Q.push(vert);
     }
     
@@ -240,21 +193,16 @@ void Graph::dijkstras(long s, long t)
         long IDv;
         if (!(visited))
         {
-            // cout << "stuff " << u.id << endl;
             S.push_back(u);
             for (int i = 0; i < adjList[keyIndex[u.id]].size(); i++)
             {
-                // cout << "5test dijkstra's" << endl;
                 tie(IDv, weight, streetName) = adjList[keyIndex[u.id]][i];
-                // cout << "weight: " << weight << endl;
                 VertexData v;
                 v.id = IDv;
                 v.coords = idTracker[IDv];
                 v.dist = u.dist + weight;
                 v.parent = u.id;
-                // cout << "v.dist: " << v.dist << endl;
                 Q.push(v);
-                
             }
         }
     }
@@ -262,7 +210,6 @@ void Graph::dijkstras(long s, long t)
     double finalDist;
     for (int i = 0; i < S.size(); i++)
     {
-        // cout << "id: " << S[i].id << " dist: " << S[i].dist << endl;
         if(S[i].id == t)
         {
             curParent = S[i].id;
@@ -276,57 +223,24 @@ void Graph::dijkstras(long s, long t)
         {
             if (S[i].id == curParent)
             {
-                // cout << curParent << endl;
-                // parentChain.push_back(curParent);
                 parentChain.insert(parentChain.begin(), curParent);
                 curParent = S[i].parent;
-                // parentChain.push_front(curParent);
-
-            }
-            
+            }   
         }
-        // path = path + "(" + to_string(idTracker[S[i].id].first) + ", " + to_string(idTracker[S[i].id].second) + ")\n";
-        // curParent = ;
-        
-        // cout << path;
     }
-    // cout << parentChain.size();
     string path = "The shortest path from (" + to_string(idTracker[s].first);
     path = path + "m " + to_string(idTracker[s].second) + ") to (";
     path = path + to_string(idTracker[t].first) + ", " + to_string(idTracker[t].second) + ") is \n";
 
     for (int i = 0; i < parentChain.size(); i++)
     {
-        // cout << parentChain[i];
         path = path + "(" + to_string(idTracker[parentChain[i]].first) + ", " + to_string(idTracker[parentChain[i]].second) + ")\n";
 
     }
     path = path + "and it has weight " + to_string(finalDist) + ".\n";
     cout << path << endl;
 }
-/*
- functionmodifiedDijkstra’s(G=(V,E),w,s)
- 2: CreateminpriorityqueueQ
- 3: CreateemptysetS
- 4: s.d=0
- 5: s.p=NIL
- 6: Q.push(s)
- 7: foreachvertexv∈V−{s}do
- 8: v.d=∞
- 9: v.p=NIL
- 10: Q.push(v)
- 11: endfor
- 12: whileQ=∅andQ.top().d=∞do
- 13: u=Q.pop()
- 14: S=S∪{u}
- 15: foreachoutneighborvofudo
- 16: ifu.d+w(u,v)<v.dthen
- 17: v.d=u.d+w(u,v)
- 18: v.p=u
- 19: endif
- 20: endfor
- 21: endwhile
- 22: endfunction*/
+
 /*
 readFromSTDIN
 Purpose: Read an inputted file of graph data and construct that graph

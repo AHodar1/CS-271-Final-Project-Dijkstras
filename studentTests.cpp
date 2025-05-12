@@ -14,6 +14,16 @@ int main()
     // Graph gFile(0);
     // gFile = gFile.readFromSTDIN();
 
+    // std::ifstream myfile ("easySampleData.out");
+    // string fileText;
+    // if (myfile.is_open()) 
+    // { 
+    //     cout << "files????" << endl;
+    //     myfile >> fileText;
+    //     cout << fileText;
+    // }
+
+
     Graph gFile = Graph::readFromSTDIN();
 
 
