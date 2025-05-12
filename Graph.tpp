@@ -171,9 +171,9 @@ void Graph::removeEdge(int u, int v)
     // }
 }
 
-void Graph::dijkstras(long s)
+void Graph::dijkstras(long s, long t)
 {
-    cout << "test dijkstra's" << endl;
+    // cout << "test dijkstra's" << endl;
     long IDv;
     double weight;
     string streetName;
@@ -204,7 +204,7 @@ void Graph::dijkstras(long s)
     
     
     // create empty set S
-    std::vector<VertexData> S(idTracker.size());
+    std::vector<VertexData> S;
 
     
     for (auto iter : idTracker)
@@ -221,15 +221,12 @@ void Graph::dijkstras(long s)
             vert.dist = INT_MAX;
         }
         vert.parent = -1;
+        // cout << "vert.dist: " << vert.dist << endl;
         Q.push(vert);
     }
     
     while (!(Q.empty()))
     {
-        // cout << "vertex id: " << Q.top().id << " dist: " << Q.top().dist << endl;
-        // Q.pop();
-        
-        // 13: u=Q.pop()
         VertexData u = Q.top();
         Q.pop();
         bool visited = false;
@@ -243,37 +240,69 @@ void Graph::dijkstras(long s)
         long IDv;
         if (!(visited))
         {
+            // cout << "stuff " << u.id << endl;
             S.push_back(u);
             for (int i = 0; i < adjList[keyIndex[u.id]].size(); i++)
             {
-                cout << "5test dijkstra's" << endl;
-    
-                // 16: if u.d+w(u,v)<v.dthen
-                // 17: v.d=u.d+w(u,v)
-                // 18: v.p=u
+                // cout << "5test dijkstra's" << endl;
                 tie(IDv, weight, streetName) = adjList[keyIndex[u.id]][i];
-                cout << "weight: " << weight << endl;
-                // if (u.dist + weight < )
+                // cout << "weight: " << weight << endl;
                 VertexData v;
                 v.id = IDv;
                 v.coords = idTracker[IDv];
                 v.dist = u.dist + weight;
                 v.parent = u.id;
+                // cout << "v.dist: " << v.dist << endl;
                 Q.push(v);
                 
             }
         }
-        // double weight;
-        // string streetName;
-        // cout << "4test dijkstra's" << adjList[indexKey[u.id]].size() << endl;
-        // cout << "4test dijkstra's" << u.id << endl;
+    }
+    long curParent;
+    double finalDist;
+    for (int i = 0; i < S.size(); i++)
+    {
+        // cout << "id: " << S[i].id << " dist: " << S[i].dist << endl;
+        if(S[i].id == t)
+        {
+            curParent = S[i].id;
+            finalDist = S[i].dist;
+        }
+    }
+    std::vector<long> parentChain;
+    while (curParent != -1)
+    {
+        for (int i = 0; i < S.size(); i++)
+        {
+            if (S[i].id == curParent)
+            {
+                // cout << curParent << endl;
+                // parentChain.push_back(curParent);
+                parentChain.insert(parentChain.begin(), curParent);
+                curParent = S[i].parent;
+                // parentChain.push_front(curParent);
 
-        // for each outneighbor of u
+            }
+            
+        }
+        // path = path + "(" + to_string(idTracker[S[i].id].first) + ", " + to_string(idTracker[S[i].id].second) + ")\n";
+        // curParent = ;
+        
+        // cout << path;
+    }
+    // cout << parentChain.size();
+    string path = "The shortest path from (" + to_string(idTracker[s].first);
+    path = path + "m " + to_string(idTracker[s].second) + ") to (";
+    path = path + to_string(idTracker[t].first) + ", " + to_string(idTracker[t].second) + ") is \n";
 
+    for (int i = 0; i < parentChain.size(); i++)
+    {
+        // cout << parentChain[i];
+        path = path + "(" + to_string(idTracker[parentChain[i]].first) + ", " + to_string(idTracker[parentChain[i]].second) + ")\n";
 
     }
-
-
+    path = path + "and it has weight " + to_string(finalDist) + ".\n";
+    cout << path << endl;
 }
 /*
  functionmodifiedDijkstra’s(G=(V,E),w,s)

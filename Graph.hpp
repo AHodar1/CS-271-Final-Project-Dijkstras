@@ -36,7 +36,7 @@ struct VertexData
     // should this be string?
     long id;
     std::pair<double, double> coords;
-    int dist;
+    double dist;
     long parent;
 };
 
@@ -74,7 +74,7 @@ class Graph {
     // long = edge and double = weight
     std::vector<std::vector<std::tuple<long, double, std::string> > > adjList; // adjacency list
     // std::vector<std::vector<Edge> > adjList; // adjacency list
-    
+    // std::map<
     
     // std::unordered_map<long, std::pair<double, double>> idTracker;
     std::map<long, std::pair<double, double>> idTracker;
@@ -111,7 +111,7 @@ class Graph {
     // throw an std::out_of_range exception if (u, v) is not an edge of the graph
     void removeEdge(int u, int v);
 
-    void dijkstras(long s);
+    void dijkstras(long s, long t);
 
     static Graph readFromSTDIN();
 
