@@ -1,3 +1,11 @@
+/*
+Graph.tpp
+Aurora hodar
+5/8/25
+Implementations for creating weighted directed graphs
+and running Dijkstra's Algorithm on them
+*/
+
 #include <iostream>
 #include <vector>
 #include <deque>
@@ -90,7 +98,15 @@ Graph &Graph::operator=(const Graph &g)
 
 }
 
-
+/*
+numEdges
+Purpose: Easy way to keep track of how many edges are in the graph
+Parameters: 
+    -N/A
+Return Value:
+    -count, the number of edges in the graph
+Errors:
+    -N/A*/
 int Graph::numEdges()
 {
     int count = 0;
@@ -107,15 +123,17 @@ int Graph::numEdges()
 
 /*
 addEdge
-Purpose: Add an edge between the two inputted vertices
+Purpose: Add an edge between the two inputted vertices to adjList, along
+    with the edge weight and street name
 Parameters:
     -u, the first vertex the edge will lead from
     -v, the second vertex, which the edge will go to
+    -w, the weight of the edge 
+    -streetName, the name of the street, if there is one
 Return Value:
     -void, but the adjacency list will have another value added to represent a new edge
 Errors:
-    -std::out_of_range, if either inputted vertex does not exist in the graph
-    -also will do nothing if there is already an edge where attempting to add a new one
+    -std::out_of_range, if either inputted vertex does not exist in the graph=
 */
 void Graph::addEdge(long u, long v, double w, string streetName)
 {
@@ -129,7 +147,14 @@ void Graph::addEdge(long u, long v, double w, string streetName)
         adjList[keyIndex[u]].push_back(vWname);
     }
 }
-
+/*
+dijkstras
+Purpose: Find the shortest path between two inputted vertices
+Parameter:
+Returns:
+    -N/A, but prints out values for the path taken
+Errors:
+    -N/A*/
 void Graph::dijkstras(long s, long t)
 {
 
@@ -258,33 +283,3 @@ Graph Graph::readFromSTDIN()
     // cout << g.idTracker.size() << endl;
     return g;
 }
-
-// void Graph::printVertices()
-// {
-//     // for (auto iter = idTracker.begin(); iter != idTracker.end(); ++iter)
-//     for(auto kv : idTracker)
-//     {
-//         // cout << kv.first;
-//         cout << "id: " << kv.first << " xCoord = " << kv.second.first << " yCoord = " << kv.second.second << endl;
-        
-//     }
-// }
-
-// void Graph::printEdges()
-// {
-//     long vert;
-//     double weight;
-//     string streetName;
-//     for(int i = 0; i < adjList.size(); i++)
-//     {
-//         // auto iter = keyIndex.begin();
-//         cout << "edge: " << indexKey[i] << endl;
-//         for (int n = 0; n < adjList[i].size(); n++)
-//         {
-//             tie(vert, weight, streetName) = adjList[i][n];
-//             cout << " to: " << vert << " with weight: " << weight;
-//             cout << ", (optional) named:" << streetName << endl;
-//             // cout << " to: " << adjList[i][n].first << " with weight: " << adjList[i][n].second << endl;
-//         } 
-//     }
-// }

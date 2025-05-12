@@ -1,3 +1,11 @@
+/*
+Graph.hpp
+Aurora hodar
+5/8/25
+Header file with definitions for creating weighted directed graphs
+and running Dijkstra's Algorithm on them
+*/
+
 #pragma once
 
 #include <iostream>
@@ -67,10 +75,6 @@ class Graph {
     void dijkstras(long s, long t);
 
     static Graph readFromSTDIN();
-
-    // void printVertices();
-    
-    // void printEdges();
 };
 
 #include "Graph.tpp"
