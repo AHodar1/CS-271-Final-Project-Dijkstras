@@ -75,9 +75,9 @@ class Graph {
 
     static Graph readFromSTDIN();
 
-    void printVertices();
+    // void printVertices();
     
-    void printEdges();
+    // void printEdges();
 };
 
 #include "Graph.tpp"

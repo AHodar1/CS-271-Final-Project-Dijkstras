@@ -119,7 +119,7 @@ Errors:
 */
 void Graph::addEdge(long u, long v, double w, string streetName)
 {
-    cout << "test addEdge" << endl;
+    // cout << "test addEdge" << endl;
     if (idTracker.count(u) == 0)
     {
         throw std::out_of_range("addEdge: vertex/vertices do not exist");
@@ -140,24 +140,7 @@ void Graph::addEdge(long u, long v, double w, string streetName)
 
 void Graph::dijkstras(long s, long t)
 {
-    // cout << "test dijkstra's" << endl;
-    long IDv;
-    double weight;
-    string streetName;
-    std::vector<EdgeData> edges(numEdges());
-    int count = 0;
-    for (int i = 0; i < adjList.size(); i++)
-    {
-        for (int n = 0; n < adjList[i].size(); n++)
-        {    
-            tie(IDv, weight, streetName) = adjList[i][n];
-            edges[count].u = indexKey[i];
-            edges[count].v = IDv;
-            edges[count].weight = weight;
-            edges[count].streetName = streetName;
-            count++;
-        }
-    }
+
     std::priority_queue <VertexData, std::vector<VertexData>, Compare> Q;
     std::vector<VertexData> S;
     
@@ -191,6 +174,8 @@ void Graph::dijkstras(long s, long t)
             }
         }
         long IDv;
+        double weight;
+        string streetName;
         if (!(visited))
         {
             S.push_back(u);
@@ -284,32 +269,32 @@ Graph Graph::readFromSTDIN()
     return g;
 }
 
-void Graph::printVertices()
-{
-    // for (auto iter = idTracker.begin(); iter != idTracker.end(); ++iter)
-    for(auto kv : idTracker)
-    {
-        // cout << kv.first;
-        cout << "id: " << kv.first << " xCoord = " << kv.second.first << " yCoord = " << kv.second.second << endl;
+// void Graph::printVertices()
+// {
+//     // for (auto iter = idTracker.begin(); iter != idTracker.end(); ++iter)
+//     for(auto kv : idTracker)
+//     {
+//         // cout << kv.first;
+//         cout << "id: " << kv.first << " xCoord = " << kv.second.first << " yCoord = " << kv.second.second << endl;
         
-    }
-}
+//     }
+// }
 
-void Graph::printEdges()
-{
-    long vert;
-    double weight;
-    string streetName;
-    for(int i = 0; i < adjList.size(); i++)
-    {
-        // auto iter = keyIndex.begin();
-        cout << "edge: " << indexKey[i] << endl;
-        for (int n = 0; n < adjList[i].size(); n++)
-        {
-            tie(vert, weight, streetName) = adjList[i][n];
-            cout << " to: " << vert << " with weight: " << weight;
-            cout << ", (optional) named:" << streetName << endl;
-            // cout << " to: " << adjList[i][n].first << " with weight: " << adjList[i][n].second << endl;
-        } 
-    }
-}
+// void Graph::printEdges()
+// {
+//     long vert;
+//     double weight;
+//     string streetName;
+//     for(int i = 0; i < adjList.size(); i++)
+//     {
+//         // auto iter = keyIndex.begin();
+//         cout << "edge: " << indexKey[i] << endl;
+//         for (int n = 0; n < adjList[i].size(); n++)
+//         {
+//             tie(vert, weight, streetName) = adjList[i][n];
+//             cout << " to: " << vert << " with weight: " << weight;
+//             cout << ", (optional) named:" << streetName << endl;
+//             // cout << " to: " << adjList[i][n].first << " with weight: " << adjList[i][n].second << endl;
+//         } 
+//     }
+// }
