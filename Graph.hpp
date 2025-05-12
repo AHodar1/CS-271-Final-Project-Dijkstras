@@ -20,13 +20,6 @@ struct VertexData
     long parent;
 };
 
-struct EdgeData
-{
-    long u, v;
-    double weight;
-    std::string streetName;
-};
-
 class Compare 
 {
     public:

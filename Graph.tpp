@@ -119,7 +119,6 @@ Errors:
 */
 void Graph::addEdge(long u, long v, double w, string streetName)
 {
-    // cout << "test addEdge" << endl;
     if (idTracker.count(u) == 0)
     {
         throw std::out_of_range("addEdge: vertex/vertices do not exist");
@@ -129,13 +128,6 @@ void Graph::addEdge(long u, long v, double w, string streetName)
         std::tuple<long, double, string> vWname = std::make_tuple(v, w, streetName);
         adjList[keyIndex[u]].push_back(vWname);
     }
-
-    // should maybe add this functionality back in?
-    // if (!(edgeIn(u, v)))
-    // {
-    //     adjList[u].push_back(v);
-    // }
-
 }
 
 void Graph::dijkstras(long s, long t)
@@ -261,11 +253,9 @@ Graph Graph::readFromSTDIN()
 
         cin >> u >> v >> weight;
         getline(cin, streetname);
-        // cout << "edge from vertex: " << u << " to vertex: " << v;
-        // cout << " with weight: " << weight << " named: " << streetname << endl;
         g.addEdge(u, v, weight, streetname);
     }
-    cout << g.idTracker.size() << endl;
+    // cout << g.idTracker.size() << endl;
     return g;
 }
 
